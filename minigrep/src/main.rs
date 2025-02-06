@@ -1,7 +1,6 @@
 use std::env;
-use std::fs;
 use std::process;
-use std::error::Error;
+use minigrep::Config;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -15,31 +14,8 @@ fn main() {
     println!("Searching for {}", config.query);
     println!("In file {}", config.file_path);
 
-    run(config);
-
-}
-
-fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.file_path)?;
-
-    println!("With text:\n{contents}");
-    Ok(()) // unit type is an empty tuple, and indicates the absence of meaningful data.
-}
-
-struct Config {
-    query: String,
-    file_path: String,
-}
-
-impl Config {
-    fn build(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3 {
-            return Err("Not enough arguments!");
-        }
-        let query = args[1].clone();
-        let file_path = args[2].clone();
-    
-        Ok(Config { query, file_path })
+    if let Err(e) = minigrep::run(config){ //The run function doesn’t return a value that we want to unwrap in the same way that Config::build returns the Config instance. Because run returns () in the success case, we only care about detecting an error, so we don’t need unwrap_or_else to return the unwrapped value, which would only be ().
+        println!("Application error: {e}");
+        process::exit(1)
     }
 }
-
