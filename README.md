@@ -13,4 +13,8 @@ cargo check # check that it compiles, does not build executable
 cargo build --release # optimized for release, creates target in target/release
 
 cargo doc --open # builds docs from the crates used in cargo.toml and displays them locally in your browser.
+
+cargo new adder --lib # whenever a new library is created, a test module with a test function is automatically generated.
+
+cargo test # picks up tests annotated with #[test] and runs them.
 ```
