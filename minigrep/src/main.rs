@@ -11,8 +11,8 @@ fn main() {
         process::exit(1);
     });
 
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.file_path);
+    //println!("Searching for {}", config.query);
+    //println!("In file {}", config.file_path);
 
     if let Err(e) = minigrep::run(config){ //The run function doesn’t return a value that we want to unwrap in the same way that Config::build returns the Config instance. Because run returns () in the success case, we only care about detecting an error, so we don’t need unwrap_or_else to return the unwrapped value, which would only be ().
         println!("Application error: {e}");

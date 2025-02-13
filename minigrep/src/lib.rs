@@ -22,6 +22,25 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> { //using () like this is the idiomatic way to indicate that we’re calling run for its side effects only.
     let contents = fs::read_to_string(config.file_path)?; //The ? operator simplifies error handling by automatically propagating errors while unwrapping successful values.
 
-    println!("With text:\n{contents}");
+    //println!("With text:\n{contents}");
     Ok(()) // unit type is an empty tuple, and indicates the absence of meaningful data.
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn one_result() {
+        let query = "duct";
+        let contents = "/
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(vec!["safe", "fast", "productive"], search(query, contents));
+    }
+}
+
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    vec![]
 }
